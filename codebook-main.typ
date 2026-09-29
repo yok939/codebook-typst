@@ -1,4 +1,5 @@
 #let code_default_size = 7.2pt
+#let code_default_lh = 5.47pt
 
 #let code(
   font_size: code_default_size,
@@ -21,7 +22,7 @@
       //Number of lines counter
       let (columns, align, make_row) = {
         if numbers {
-          ( ( auto, 1fr),
+          ( ( auto, 1fr ),
             ( right + horizon, left ),
             e => {
               let (i, l) = e
@@ -61,7 +62,7 @@
           .enumerate()
           .map(make_row)
           .flatten()
-          .map(c => if c.has("text") and c.text == "" { v(5.47pt) } else { c })
+          .map(c => if c.has("text") and c.text == "" { v(code_default_lh) } else { c })
       )
     }
   )
