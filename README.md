@@ -1,6 +1,6 @@
 # codebook-typst
 
-ICPC codebook generator written in Typst, used by team yokAndHisBuddies.
+ICPC codebook generator written in Typst, used by team **yokAndHisBuddies**.
 
 ## Building
 
