@@ -1,6 +1,8 @@
 #let code_default_size = 7.2pt
 #let code_default_lh = 5.47pt
 
+#let include_dir = "src/"
+
 #let code(
   font_size: code_default_size,
   numbers: true,
@@ -16,6 +18,7 @@
     fill: luma(240),
     inset: 6pt,
     radius: 2pt,
+    above: 6pt,
     width: 100%,
     clip: false,
     {
@@ -68,7 +71,6 @@
   )
 }
 
-
 // Team dictionary creation
 #let setup_team(team_name: "", team_members: (), team_institution: "") = {
   let team = (
@@ -113,29 +115,68 @@
   pagebreak()
 }
 
+#let get_lang(
+  file_name
+) = {
+  let got_file = file_name
+  let lang_type = ""
+  for i in str(got_file).rev() {
+    if (i == ".") { break }
+    lang_type += i 
+  }
+  lang_type = lang_type.rev()
+  if lang_type == "cpp" or lang_type == "hpp" { lang_type = "cpp" }
+  else if lang_type == "c" or lang_type == "h" { lang_type = "c" }
+  else if lang_type == ".vimrc" { lang_type = "vim" }
+  return lang_type
+}
+
+
 #let codebook(team: (), source_path: "") = {
   set document(author: team.team_members, title: "ICPC Codebook - " + team.team_name)
+  show outline.entry: it => link(
+    it.element.location(),
+    it.indented(it.prefix(), it.inner())
+  )
+  set heading(numbering: "1.", )
+  show heading: set block(below: 6pt)
+
   set page(columns: 1)
   format_title_page(team: team)
+
+  set page(margin: 0.5cm, columns: 2)
+  outline()
 
   set page(margin: 0.5cm, columns: 2) 
   set columns(gutter: 0.5pt)
 
   // show raw: set text(size: code_size)
   //show raw: set text(size: code_default_size)
-  code(```cpp
-  #include <iostream>
 
-  int main()
-  {
-      std::cout << "Hello NTOU!\n";
-
-      int n;
-      std::cin >> n;
-      for(int i = i; i <= n; i++)
-      {
-          cout << i << '\n';
+  set heading(numbering: "1.", )
+  show heading: set block(below: 6pt, above: 8pt)
+  
+  let in_yaml = yaml("config.yaml") 
+  for (main_name, main_items) in in_yaml {
+    for (chapter_name, chapter_items) in main_items {
+      heading(str(chapter_name), level: 1)
+      for (section_name, section_items) in chapter_items {
+        heading(str(section_name), level: 2)
+        if section_items.len() > 1 {
+          for (subsection_name, subsection_items) in section_items {
+            heading(str(subsection_name), level: 3)
+            let got_file = subsection_items.at(0)
+            let temp = raw(read(include_dir + got_file), lang: get_lang(got_file))
+            text(code(temp))
+          }
+        }
+        else {
+            let got_file = section_items.at(0)
+            let temp = raw(read(include_dir + got_file), lang: get_lang(got_file))
+            text(code(temp))
+        }
       }
+    }
   }
-  ```)
+
 }

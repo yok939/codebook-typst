@@ -1,0 +1,5 @@
+# Main resources
+include:
+  Demo:
+    Demo code:
+      - demo/demo.cpp
