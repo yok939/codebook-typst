@@ -1,11 +1,26 @@
 # Main resources
 include:
   Misc:
-    Truly Misc:
+    Tools:
       Macros:
-        - misc/truly_misc/marcos.cpp
+        - misc/tools/marcos.cpp
       <random>:
-        - misc/truly_misc/random.cpp
+        - misc/tools/random.cpp
+      Floating Point Binary Search:
+        - misc/tools/binary_search_float.cpp
+    Algorithms:
+      Bit Tricks:
+        - misc/algorithms/bit_tricks.cpp
+      Alien Tricks:
+        - misc/algorithms/alien_trick.cpp 
+      Hilbert Curve:
+        - misc/algorithms/hilbert.cpp
+      Infinite Grid Knight Distance:
+        - misc/algorithms/hilbert.cpp
+      Longest Increasing Subsequence:
+        - misc/algorithms/LIS.cpp
+      Mo's Algorithm on Tree:
+        - misc/algorithms/MoAlgoOnTree.cpp
   Data Structure:
     2DBIT.cpp:
       - ds/2DBIT.cpp

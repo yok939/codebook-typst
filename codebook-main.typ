@@ -1,7 +1,13 @@
-#let code_default_size = 7.2pt
-#let code_default_lh = 5.47pt
+#let code_default_size = 7pt
+#let code_default_lh = 4.61pt
 
 #let include_dir = "src/"
+
+#let measure_raw(body) = context {
+  set text(size: code_default_size)
+  let size = measure(body)
+  [#size.height]
+}
 
 #let code(
   font_size: code_default_size,
@@ -13,13 +19,14 @@
   content
 ) = {
   show raw: set text(size: font_size)
+  set raw(tab-size: 4)
   let actual_len = content.text.split("\n").len()
   block(
     fill: luma(240),
     inset: 6pt,
     radius: 2pt,
     above: 6pt,
-    width: 100%,
+    width: 99%,
     clip: false,
     {
       //Number of lines counter
@@ -55,7 +62,8 @@
         rows: (auto, ),
         gutter: 0pt,
         inset: 2pt,
-        align: (col, _) => align.at(col),
+        //align: (col, _) => align.at(col),
+        align: (top + right, auto),
         ..content
           .text
           .split("\n")
@@ -142,6 +150,7 @@
   format_title_page(team: team)
 
   set page(margin: 0.5cm, columns: 2)
+  set columns(gutter: 0.5pt)
   outline()
 
   set page(margin: 0.5cm, columns: 2) 
@@ -156,6 +165,7 @@
   let in_yaml = yaml("config.yaml") 
   for (main_name, main_items) in in_yaml {
     for (chapter_name, chapter_items) in main_items {
+      line(length: 100%)
       heading(str(chapter_name), level: 1)
       for (section_name, section_items) in chapter_items {
         heading(str(section_name), level: 2)
@@ -175,5 +185,11 @@
       }
     }
   }
+
+  // If changing code font size, please run following function to get 
+  // new font height for empty line
+  //
+  //set text(size: code_default_size)
+  //measure_raw[raw("test")]
 
 }
