@@ -1,5 +1,14 @@
 # Main resources
 include:
+  Misc:
+    Truly Misc:
+      Macros:
+        - misc/truly_misc/marcos.cpp
+      <random>:
+        - misc/truly_misc/random.cpp
+  Data Structure:
+    2DBIT.cpp:
+      - ds/2DBIT.cpp
   Demo:
     Demo code:
       - demo/demo.cpp

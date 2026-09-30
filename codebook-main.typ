@@ -13,7 +13,7 @@
   content
 ) = {
   show raw: set text(size: font_size)
-
+  let actual_len = content.text.split("\n").len()
   block(
     fill: luma(240),
     inset: 6pt,
@@ -33,9 +33,6 @@
               let n_str = if (calc.rem(n, stepnumber) == 0) or (numberfirstline and i == 0) { 
                 numbering("1", n)
               } 
-              else {
-                "" 
-              }
               (raw(n_str) + h(.5em), raw(lang: content.lang, l))
             }
           )
@@ -162,7 +159,7 @@
       heading(str(chapter_name), level: 1)
       for (section_name, section_items) in chapter_items {
         heading(str(section_name), level: 2)
-        if section_items.len() > 1 {
+        if type(section_items) == dictionary {
           for (subsection_name, subsection_items) in section_items {
             heading(str(subsection_name), level: 3)
             let got_file = subsection_items.at(0)
